@@ -33,3 +33,26 @@
 
 ## Actual time needed to complete: 30 Minutes
 
+---
+
+## Name of feature: Storage
+
+## Estimate of time needed to complete: 60 Minutes
+
+## Start time: 1:50PM
+
+## Finish time: 3:30PM
+
+## Actual time needed to complete: 100 Minutes
+
+---
+
+## Name of feature: Book Component
+
+## Estimate of time needed to complete: 90 Minutes
+
+## Start time: 3:30PM
+
+## Finish time: 6:00PM
+
+## Actual time needed to complete: 150 Minutes

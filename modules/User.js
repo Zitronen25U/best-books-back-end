@@ -13,9 +13,6 @@ const userSchema = new mongoose.Schema({
   books: [bookSchema]
 });
 
-const User = mongoose.model('userParent', userSchema);
-
-
-
+const User = mongoose.model('UserParent', userSchema);
 
 module.exports = User;
