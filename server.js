@@ -32,11 +32,14 @@ const dan = new User({
   books: [{name: '1984', description: 'Such a good read', status: 'my fav books'}, {name: 'Let my People Surf', description: 'Surfing is good for you', status: 'my fav books'}, {name: 'Grapes of Wrath', description: 'Grapes taste good', status: 'my fav books'}]
 });
 
+
 app.get('/entries', (rec, res) => {
   dan.save();
   brian.save();
   res.send('entries');
 });
+
+
 app.post('/books', addABook);
 app.delete('/books:index', deleteABook);
 
@@ -45,9 +48,12 @@ function addABook(request, response){
   const name = request.body.name;
   const book = { name: request.body.bookName }
 
-  User.findOne({ name }, (err, entry) => {
+  User.findOne({ email: name }, (err, entry) => {
     if(err) return console.error(err);
-    entry.boolks.push(book);
+    if(!entry){
+      return console.error('user not found');
+    }
+    entry.books.push(book);
     entry.save();
     response.status(200).send(entry.books);
   })
@@ -67,8 +73,8 @@ async function getUser(request, response) {
   // console.log(request.query);
   await User.find({ email: name }, function (err, items) {
     if (err) return console.error(err);
-    console.log('line 44', items[0].books);
-    response.status(200).send(items[0].books);
+    console.log(items);
+    response.status(200).send(items[items.length -1].books);
   })
 }
 
