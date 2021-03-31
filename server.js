@@ -19,12 +19,13 @@ const User = require('./modules/User')
 
 mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
 
-
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   console.log('connected to DB');
 });
+
+app.use(express.json());
 
 const dan = new User({
   email: 'engeldb@gmail.com',
@@ -36,6 +37,22 @@ app.get('/entries', (rec, res) => {
   brian.save();
   res.send('entries');
 });
+app.post('/books', addABook);
+app.delete('/books:index', deleteABook);
+
+function addABook(request, response){
+  console.log('inside of addABook', request.body);
+  const name = request.body.name;
+  const book = { name: request.body.bookName }
+
+  User.findOne({ name }, (err, entry) => {
+    if(err) return console.error(err);
+    entry.boolks.push(book);
+    entry.save();
+    response.status(200).send(entry.books);
+  })
+}
+
 
 const brian = new User({
   email: 'bethelemons@gmail.com',
@@ -50,11 +67,26 @@ async function getUser(request, response) {
   // console.log(request.query);
   await User.find({ email: name }, function (err, items) {
     if (err) return console.error(err);
-    console.log('line 44', items.books);
+    console.log('line 44', items[0].books);
     response.status(200).send(items[0].books);
   })
 }
 
+function deleteABook(request, response) {
+  const index = request.params.index;
+  const userName = request.query.name;
+  // { index: '5', userName: 'Brian' }
+  
+  User.findOne({ name: userName }, (err, entry) => {
+    const newBookArray = entry.books.filter((cat, i) => {
+      return i !== index;
+    });
+    entry.books = newBookArray;
+    entry.save();
+    response.status(200).send('success!')
+  })
+
+}
 
 
 app.listen(PORT, () => console.log(`server is up on ${PORT}`));
