@@ -41,7 +41,7 @@ app.get('/entries', (rec, res) => {
 
 
 app.post('/books', addABook);
-app.delete('/books:index', deleteABook);
+app.delete('/books/:index', deleteABook);
 
 function addABook(request, response){
   console.log('inside of addABook', request.body);
@@ -81,17 +81,20 @@ async function getUser(request, response) {
 function deleteABook(request, response) {
   const index = request.params.index;
   const userName = request.query.name;
-  // { index: '5', userName: 'Brian' }
+  // console.log("we are in deleteABook", index, userName);
   
-  User.findOne({ name: userName }, (err, entry) => {
-    const newBookArray = entry.books.filter((cat, i) => {
+  User.findOne({ email: userName }, (err, entry) => {
+    if (err) return err;
+    // console.log("this is our entry", entry);
+    const newBookArray = entry.books.filter((book, i) => {
+      // console.log(entry.books[i]);
       return i !== index;
     });
+    console.log("this is our newBookArray", newBookArray);
     entry.books = newBookArray;
     entry.save();
     response.status(200).send('success!')
   })
-
 }
 
 
