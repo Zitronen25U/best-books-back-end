@@ -79,7 +79,7 @@ async function getUser(request, response) {
 }
 
 function deleteABook(request, response) {
-  const index = request.params.index;
+  const index = parseInt(request.params.index);
   const userName = request.query.name;
   // console.log("we are in deleteABook", index, userName);
   
