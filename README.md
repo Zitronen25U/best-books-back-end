@@ -56,3 +56,27 @@
 ## Finish time: 6:00PM
 
 ## Actual time needed to complete: 150 Minutes
+
+---
+
+## Name of feature: Add a Book
+
+## Estimate of time needed to complete: 120 Minutes
+
+## Start time: 1:15PM
+
+## Finish time: 4:15PM
+
+## Actual time needed to complete: 180 Minutes
+
+---
+
+## Name of feature: Delete Book
+
+## Estimate of time needed to complete: 120 Minutes
+
+## Start time: 4:15PM
+
+## Finish time: 6:30PM
+
+## Actual time needed to complete: 150 Minutes
