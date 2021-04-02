@@ -80,3 +80,15 @@
 ## Finish time: 6:30PM
 
 ## Actual time needed to complete: 150 Minutes
+
+---
+
+## Name of feature: Update Books
+
+## Estimate of time needed to complete: 180 Minutes
+
+## Start time: 1:15PM
+
+## Finish time: 6:00PM
+
+## Actual time needed to complete: 285 Minutes
