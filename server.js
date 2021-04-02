@@ -41,9 +41,63 @@ app.post('/books', Books.addABook);
 app.delete('/books/:index', Books.deleteABook);
 app.put('/books/:index', Books.updateABook);
 
-// const brian = new User({
-//   email: 'bethelemons@gmail.com',
-//   books: [{name: 'The Hobbit', description: 'Bilbao Baggins discovers the truth', status: 'my fav books'}, {name: 'The Witcher', description: 'A Monster Hunter', status: 'my fav books'}, {name: 'The Martian', description: 'Surviving on Mars', status: 'my fav books'}]
-// });
+
+app.post('/books', addABook);
+app.delete('/books/:index', deleteABook);
+
+function addABook(request, response){
+  console.log('inside of addABook', request.body);
+  const name = request.body.name;
+  const book = { name: request.body.bookName }
+
+  User.findOne({ email: name }, (err, entry) => {
+    if(err) return console.error(err);
+    if(!entry){
+      return console.error('user not found');
+    }
+    entry.books.push(book);
+    entry.save();
+    response.status(200).send(entry.books);
+  })
+}
+
+
+const brian = new User({
+  email: 'bethelemons@gmail.com',
+  books: [{name: 'The Hobbit', description: 'Bilbao Baggins discovers the truth', status: 'my fav books'}, {name: 'The Witcher', description: 'A Monster Hunter', status: 'my fav books'}, {name: 'The Martian', description: 'Surviving on Mars', status: 'my fav books'}]
+});
+
+
+app.get('/books', getUser);
+
+async function getUser(request, response) {
+  const name = request.query.user_name;
+  // console.log(request.query);
+  await User.find({ email: name }, function (err, items) {
+    if (err) return console.error(err);
+    console.log(items);
+    response.status(200).send(items[items.length -1].books);
+  })
+}
+
+function deleteABook(request, response) {
+  const index = parseInt(request.params.index);
+  const userName = request.query.name;
+  // console.log("we are in deleteABook", index, userName);
+  
+  User.findOne({ email: userName }, (err, entry) => {
+    if (err) return err;
+    // console.log("this is our entry", entry);
+    const newBookArray = entry.books.filter((book, i) => {
+      // console.log(entry.books[i]);
+      return i !== index;
+    });
+    console.log("this is our newBookArray", newBookArray);
+    entry.books = newBookArray;
+    entry.save();
+    response.status(200).send('success!')
+  })
+}
+
 
 app.listen(PORT, () => console.log(`server is up on ${PORT}`));
