@@ -3,7 +3,7 @@
 require('dotenv').config();
 
 const express = require('express');
-
+const Books = require('./Models/books');
 const cors = require('cors');
 
 const app = express();
@@ -13,8 +13,6 @@ app.use(cors());
 const PORT = process.env.PORT;
 
 const mongoose = require('mongoose');
-
-const User = require('./modules/User')
 
 
 mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
@@ -27,17 +25,21 @@ db.once('open', function () {
 
 app.use(express.json());
 
-const dan = new User({
-  email: 'engeldb@gmail.com',
-  books: [{name: '1984', description: 'Such a good read', status: 'my fav books'}, {name: 'Let my People Surf', description: 'Surfing is good for you', status: 'my fav books'}, {name: 'Grapes of Wrath', description: 'Grapes taste good', status: 'my fav books'}]
-});
-
+// const dan = new User({
+//   email: 'engeldb@gmail.com',
+//   books: [{name: '1984', description: 'Such a good read', status: 'my fav books'}, {name: 'Let my People Surf', description: 'Surfing is good for you', status: 'my fav books'}, {name: 'Grapes of Wrath', description: 'Grapes taste good', status: 'my fav books'}]
+// });
 
 app.get('/entries', (rec, res) => {
   dan.save();
   brian.save();
   res.send('entries');
 });
+
+app.get('/books', Books.getUser);
+app.post('/books', Books.addABook);
+app.delete('/books/:index', Books.deleteABook);
+app.put('/books/:index', Books.updateABook);
 
 
 app.post('/books', addABook);
