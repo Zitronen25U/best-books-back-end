@@ -25,11 +25,6 @@ db.once('open', function () {
 
 app.use(express.json());
 
-// const dan = new User({
-//   email: 'engeldb@gmail.com',
-//   books: [{name: '1984', description: 'Such a good read', status: 'my fav books'}, {name: 'Let my People Surf', description: 'Surfing is good for you', status: 'my fav books'}, {name: 'Grapes of Wrath', description: 'Grapes taste good', status: 'my fav books'}]
-// });
-
 app.get('/entries', (rec, res) => {
   dan.save();
   brian.save();
@@ -60,12 +55,6 @@ function addABook(request, response){
     response.status(200).send(entry.books);
   })
 }
-
-
-const brian = new User({
-  email: 'bethelemons@gmail.com',
-  books: [{name: 'The Hobbit', description: 'Bilbao Baggins discovers the truth', status: 'my fav books'}, {name: 'The Witcher', description: 'A Monster Hunter', status: 'my fav books'}, {name: 'The Martian', description: 'Surviving on Mars', status: 'my fav books'}]
-});
 
 
 app.get('/books', getUser);
